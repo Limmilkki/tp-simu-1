@@ -5,6 +5,6 @@
 using namespace std;
 
 int main() {
-    vonNeumann(3141,20);
+    LCGStatTest(1000000,true);
     return 0;
 }
