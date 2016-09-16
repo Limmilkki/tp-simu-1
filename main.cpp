@@ -5,6 +5,6 @@
 using namespace std;
 
 int main() {
-    LCGStatTest(1000000,true);
+    LFSR4bits();
     return 0;
 }

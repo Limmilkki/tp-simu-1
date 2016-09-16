@@ -1,4 +1,5 @@
 #include <iostream>
+#include <bitset>
 
 using namespace std;
 
@@ -88,7 +89,26 @@ int * LCGStatTest(int nbSimu, bool trace)
     return tab;
 }
 
-int * LFSR4bits()
+void LFSR4bits()
 {
-    
+    bitset<4> horloge(0);
+    bitset<4> graine(6);
+    bitset<4> sortie(0);
+    bitset<4> entree(0);
+
+
+    //A faire en bitset
+    for(int i = 0; i < 8; i++)
+    {
+        sortie = graine % 2;
+        graine = graine >>> 1;
+
+        entree = horloge ^ sortie;
+        cout << "Entree : " << entree << endl;
+
+        graine += entree*8;
+        cout << "Graine : " << graine << endl;
+
+        sortie.
+    }
 }
