@@ -1,0 +1,2 @@
+main.o: main.cpp headers/neumann.hpp
+neumann.o: neumann.cpp
