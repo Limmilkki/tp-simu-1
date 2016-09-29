@@ -89,6 +89,13 @@ int * LCGStatTest(int nbSimu, bool trace)
     return tab;
 }
 
+/**
+ * Ne pas tenir compte de cette fonction.
+ * On avait pas réussi avec des ints classiques
+ * Esayer de le faire avec un bitset. Sinon laisse tomber.
+ * C'est toujours mieux de l'avoir pour le partiel.
+ */
+
 void LFSR4bits()
 {
     bitset<4> horloge(0);
