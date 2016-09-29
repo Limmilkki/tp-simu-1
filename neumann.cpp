@@ -3,9 +3,9 @@
 
 using namespace std;
 
-int vonNeumann4DigitsIte(int graine)
+long vonNeumann4DigitsIte(long graine)
 {
-    int alea, temp;
+    long alea, temp;
 
     alea = graine*graine;
     alea /= 100;
@@ -18,11 +18,11 @@ int vonNeumann4DigitsIte(int graine)
     return alea;
 }
 
-void vonNeumann(int graine, int nb)
+void vonNeumann(long graine, long nb)
 {
-    int alea = graine;
+    long alea = graine;
 
-    for(int i = 0;i<nb;i++)
+    for(long i = 0;i<nb;i++)
     {
         cout << alea << endl;
         alea = vonNeumann4DigitsIte(alea);
@@ -41,11 +41,11 @@ void vonNeumannTests()
 
 }
 
-int * LCG(int graine,int a, int c, int m, int nb, bool trace)
+long * LCG(long graine,long a, long c, long m, long nb, bool trace)
 {
-    int * res = new int[nb];
-    int cour = graine;
-    for (int i = 0; i<nb ; i++)
+    long * res = new long[nb];
+    long cour = graine;
+    for (long i = 0; i<nb ; i++)
     {
         res[i] = cour;
         cour = (a*cour+c) % m;
@@ -53,7 +53,7 @@ int * LCG(int graine,int a, int c, int m, int nb, bool trace)
 
     if(trace)
     {
-        for(int i=0;i<nb;i++)
+        for(long i=0;i<nb;i++)
         {
             cout << res[i] << endl;
         }
@@ -62,16 +62,16 @@ int * LCG(int graine,int a, int c, int m, int nb, bool trace)
     return res;
 }
 
-int * LCGStatTest(int nbSimu, bool trace)
+long * LCGStatTest(long nbSimu, bool trace)
 {
-    int * tab = new int[10];
-    int * res = LCG(125, 25, 16, 256, nbSimu, false);
+    long * tab = new long[10];
+    long * res = LCG(32162,65539,0,32768,100,false);
     double cour;
-    int tronc = 0;
+    long tronc = 0;
 
-    for(int i = 0; i<nbSimu; i++)
+    for(long i = 0; i<nbSimu; i++)
     {
-        cour = res[i]/254.0;
+        cour = res[i]/65538.0;
         tronc = 10*cour;
         tab[tronc]++;
     }
@@ -80,7 +80,7 @@ int * LCGStatTest(int nbSimu, bool trace)
 
     if(trace)
     {
-        for(int i = 0; i<10; i++)
+        for(long i = 0; i<10; i++)
         {
             cout << i << " : " << tab[i] << endl;
         }
@@ -91,11 +91,12 @@ int * LCGStatTest(int nbSimu, bool trace)
 
 /**
  * Ne pas tenir compte de cette fonction.
- * On avait pas réussi avec des ints classiques
+ * On avait pas réussi avec des longs classiques
  * Esayer de le faire avec un bitset. Sinon laisse tomber.
  * C'est toujours mieux de l'avoir pour le partiel.
  */
 
+/*
 void LFSR4bits()
 {
     bitset<4> horloge(0);
@@ -105,7 +106,7 @@ void LFSR4bits()
 
 
     //A faire en bitset
-    for(int i = 0; i < 8; i++)
+    for(long i = 0; i < 8; i++)
     {
         sortie = graine % 2;
         graine = graine >>> 1;
@@ -118,4 +119,61 @@ void LFSR4bits()
 
         sortie.
     }
+}
+*/
+
+/**
+ *
+ * @param graine
+ * @param a
+ * @param c
+ * @param m
+ * @param nb
+ * @param N
+ * @param trace
+ * @return
+ *
+ * L'algo est bon mais les résultats ne vont pas... Voir main.cpp
+ */
+long * LCGBrassage(long * graine, long * a, long * c, long m, long nb, long N, bool trace)
+{
+    long * LCGX;
+    long * LCGY;
+    long * tab = new long[N];
+    long indice;
+    long * res = new long[10];
+    double cour;
+    long tronc;
+
+    LCGX = LCG(graine[0], a[0], c[0], m, nb, false);
+    LCGY = LCG(graine[1], a[1], c[1], m, nb, false);
+
+    for(long i=0; i<N; i++)
+    {
+        indice = LCGY[i] % nb;
+        tab[i] = LCGX[indice];
+    }
+
+
+    for(int i=0;i<nb;i++)
+    {
+        cour = tab[i] / ((float) m+2);
+        tronc = 10*cour;
+        res[tronc]++;
+
+    }
+
+    if(trace)
+    {
+        for(int i = 0; i < 9; i++)
+        {
+            cout << i << " : " << res[i] << endl;
+        }
+    }
+
+    delete [] LCGX;
+    delete [] LCGY;
+    delete [] tab;
+
+    return res;
 }

@@ -17,7 +17,6 @@ EXE =executable
 # regle finale pour la creation de l'executable
 executable:$(OBJ)
 	$(CC) $(LDFLAGS) -o ./exec/$@ $(OBJ)
-	valgrind ./exec/$(EXE)
 	rm -rf $(OBJ) core *.h.gch
 
 # compiler tous les .cpp en .o
